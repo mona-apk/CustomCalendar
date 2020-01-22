@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable name="listener"
+            type="com.monapk.customcalendar.util.ClickListener"/>
+        <variable name="day"
+            type="String"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{listener::onClicked}"
+        android:background="#80CBC4"
+        android:orientation="vertical">
+        <!-- こっちに色を入れると接線で線が入ってしまう -->
+        <com.monapk.customcalendar.customview.SquareTextView
+            android:id="@+id/day_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@{day}"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+</layout>
