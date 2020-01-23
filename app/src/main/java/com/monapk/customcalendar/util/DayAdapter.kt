@@ -11,11 +11,15 @@ import com.monapk.customcalendar.databinding.DayItemBinding
 import kotlinx.android.synthetic.main.day_item.view.*
 
 //TODO:外部から何かしらのリストを引数に
-class DayAdapter() : RecyclerView.Adapter<DayAdapter.DayViewHolder>() ,
+class DayAdapter(private var listOfDay: MutableList<Int>) : RecyclerView.Adapter<DayAdapter.DayViewHolder>() ,
     ClickListener {
 
-    //一時的
-    val mockDays = Array(31) { i -> i}
+
+    fun upDateList(listOfInt: MutableList<Int>){
+        listOfDay.clear()
+        listOfDay = listOfInt
+        notifyDataSetChanged()
+    }
 
     //view holderの作成
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
@@ -27,11 +31,15 @@ class DayAdapter() : RecyclerView.Adapter<DayAdapter.DayViewHolder>() ,
 
     //リストの数を取得する
     //TODO: リストのサイズの変更
-    override fun getItemCount(): Int = mockDays.size
+    override fun getItemCount(): Int = listOfDay.size
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
-        holder.view.day = (mockDays[position] + 1).toString()
-        holder.view.listener = this
+        if (listOfDay[position] == 0) {
+            holder.view.day = ""
+        }else{
+            holder.view.day = listOfDay[position].toString()
+            holder.view.listener = this
+        }
     }
 
     //TAPされた時の記述
