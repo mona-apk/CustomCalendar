@@ -1,8 +1,9 @@
 package com.monapk.customcalendar.customview
 
+import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -10,11 +11,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.monapk.customcalendar.R
 import com.monapk.customcalendar.util.DayAdapter
 import kotlinx.android.synthetic.main.custom_calendar.view.*
+import kotlinx.coroutines.*
 import java.util.*
 
 class CalendarView(context: Context, attributeSet: AttributeSet?) : ConstraintLayout(context,attributeSet) {
 
     private var layout : View = LayoutInflater.from(context).inflate(R.layout.custom_calendar, this)
+
+    private lateinit var fadeIn : ObjectAnimator
 
     private val calJ : Calendar = Calendar.getInstance()
 
@@ -43,6 +47,7 @@ class CalendarView(context: Context, attributeSet: AttributeSet?) : ConstraintLa
         layout.next.setOnClickListener {
             changeMonth(1)
         }
+        fadeIn = ObjectAnimator.ofFloat(calendar_recycler_view,"alpha",0f,1f)
     }
 
     private fun init() {
@@ -52,6 +57,7 @@ class CalendarView(context: Context, attributeSet: AttributeSet?) : ConstraintLa
         //1日の曜日が欲しい
         calJ.set(year, month,1)
         dow = calJ.get(Calendar.DAY_OF_WEEK)
+        monthInfo.text = "$year.${month+1}"
     }
 
     private fun getData() : MutableList<Int> {
@@ -67,20 +73,26 @@ class CalendarView(context: Context, attributeSet: AttributeSet?) : ConstraintLa
         return listOfDay
     }
 
+    @SuppressLint("SetTextI18n")
     private fun changeMonth(p:Int) {
+        calendar_recycler_view.visibility = View.INVISIBLE
         calJ.add(Calendar.MONTH,p)
         init()
         listOfDay = getData()
-        dayAdapter.upDateList(listOfDay)
+        CoroutineScope(Dispatchers.Main).launch {
+            layout.calendar_recycler_view.apply{
+                dayAdapter.upDateList(listOfDay)
+            }
+            delay(100)
+            calendar_recycler_view.visibility = View.VISIBLE
+            fadeIn.apply {
+                duration = 500
+                start()
+            }
+        }
+
     }
 
 
+
 }
-
-
-
-
-
-
-
-

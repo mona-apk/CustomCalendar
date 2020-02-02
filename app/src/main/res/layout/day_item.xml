@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{listener::onClicked}"
-        android:background="#80CBC4"
         android:orientation="vertical">
         <!-- こっちに色を入れると接線で線が入ってしまう -->
         <com.monapk.customcalendar.customview.SquareTextView

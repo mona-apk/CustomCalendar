@@ -9,14 +9,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.monapk.customcalendar.R
 import com.monapk.customcalendar.databinding.DayItemBinding
 import kotlinx.android.synthetic.main.day_item.view.*
+import kotlinx.coroutines.*
 
 //TODO:外部から何かしらのリストを引数に
 class DayAdapter(private var listOfDay: MutableList<Int>) : RecyclerView.Adapter<DayAdapter.DayViewHolder>() ,
     ClickListener {
 
-
     fun upDateList(listOfInt: MutableList<Int>){
-        listOfDay.clear()
         listOfDay = listOfInt
         notifyDataSetChanged()
     }
@@ -24,13 +23,10 @@ class DayAdapter(private var listOfDay: MutableList<Int>) : RecyclerView.Adapter
     //view holderの作成
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayViewHolder {
         val inflater : LayoutInflater = LayoutInflater.from(parent.context)
-
         val view = DataBindingUtil.inflate<DayItemBinding>(inflater, R.layout.day_item,parent,false)
         return DayViewHolder(view)
     }
 
-    //リストの数を取得する
-    //TODO: リストのサイズの変更
     override fun getItemCount(): Int = listOfDay.size
 
     override fun onBindViewHolder(holder: DayViewHolder, position: Int) {
@@ -44,7 +40,7 @@ class DayAdapter(private var listOfDay: MutableList<Int>) : RecyclerView.Adapter
 
     //TAPされた時の記述
     override fun onClicked(v: View) {
-        Log.d("TAGG",v.day_text.text.toString())
+        Log.d("tags",v.day_text.text.toString())
     }
 
     //view holder class

@@ -98,4 +98,13 @@
         android:text="next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/calendar_recycler_view" />
+
+    <TextView
+        android:id="@+id/monthInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/prev"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendar_recycler_view" />
 </androidx.constraintlayout.widget.ConstraintLayout>
